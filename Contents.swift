@@ -106,3 +106,5 @@ var stringAge = 25
 var stringLatitude = 36.166667
 
 "Your name is \(interPolation), your age is \(stringAge), and your latitude is \(stringLatitude)"
+
+
