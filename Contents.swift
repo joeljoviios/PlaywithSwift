@@ -563,8 +563,8 @@ func getHaterStatus(weather: String) -> String? {
 ///  Now for the important stuff: Swift wants your code to be really safe, and trying to use a nil value is a bad idea. It might crash your code, it might screw up your app logic, or it might make your user interface show the wrong thing. As a result, when you declare a value as being optional, Swift will make sure you handle it safely.
 
 /// Let's try this now: add these lines of code to your playground:
-var status: String
-status = getHaterStatus(weather: "rainy")
+// var status: String
+// status = getHaterStatus(weather: "rainy") // xcode complains: Ambiguous use of 'getHaterStatus(weather:)'
 
 /// The first line creates a string variable, and the second assigns to it the value from getHaterStatus() – and today the weather is rainy, so those haters are hating for sure.
 
@@ -575,7 +575,7 @@ var status: String?
 status = getHaterStatus(weather: "rainy")
 
 /// And the second like this:
-var status = getHaterStatus(weather: "rainy")
+// var status = getHaterStatus(weather: "rainy")
 
 /// Regardless of which you choose, that value might be there or might not, and by default Swift won't let you use it dangerously. As an example, imagine a function like this:
 func takeHaterAction(status: String) {
@@ -597,7 +597,7 @@ if let unwrappedStatus = status {
 
 /// These if let statements check and unwrap in one succinct line of code, which makes them very common. Using this method, we can safely unwrap the return value of getHaterStatus() and be sure that we only call takeHaterAction() with a valid, non-optional string. Here's the complete code:
 
-func getHaterStatus(weather: String) -> String? {
+func getHaterStatuss(weather: String) -> String? {
     if weather == "sunny" {
         return nil
     } else {
@@ -605,14 +605,14 @@ func getHaterStatus(weather: String) -> String? {
     }
 }
 
-func takeHaterAction(status: String) {
+func takeHaterActionn(status: String) {
     if status == "Hate" {
         print("Hating")
     }
 }
 
-if let haterStatus = getHaterStatus(weather: "rainy") {
-    takeHaterAction(status: haterStatus)
+if let haterStatus = getHaterStatuss(weather: "rainy") {
+    takeHaterActionn(status: haterStatus)
 }
 
 /// If you understand this concept, you're welcome to skip down to the title that says "Force unwrapping optionals". If you're still not quite sure about optionals, carry on reading.
@@ -687,7 +687,7 @@ let bobPosition = position(of: "Bob", in: items)
 /// Please be careful, though: if you try this on a variable that does not have a value, your code will crash.
 
 /// To put together a working example, here's some foundation code:
-func yearAlbumReleased(name: String) -> Int? {
+func yearAlbumReleasedd(name: String) -> Int? {
     if name == "Taylor Swift" { return 2006 }
     if name == "Fearless" { return 2008 }
     if name == "Speak Now" { return 2010 }
@@ -697,7 +697,7 @@ func yearAlbumReleased(name: String) -> Int? {
     return nil
 }
 
-var year = yearAlbumReleased(name: "Red")
+var year = yearAlbumReleasedd(name: "Red")
 
 if year == nil {
     print("There was an error")
