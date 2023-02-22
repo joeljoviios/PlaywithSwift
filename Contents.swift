@@ -1158,3 +1158,94 @@ class TaylorFann {
 let taylorFan = TaylorFann()
 taylorFan.name = "fenny" // xcode complains: 'name' is inaccessible due to 'private' protection level
 /// If you want to use “file private” access control, just write it as one word like so: fileprivate.
+
+// MARK:- POLYMORPHISM AND TYPECASTING
+/// Because classes can inherit from each other (e.g. CountrySinger can inherit from Singer) it means one class is effectively a superset of another: class B has all the things A has, with a few extras. This in turn means that you can treat B as type B or as type A, depending on your needs. Confused? Let's try some code:
+
+class Album {
+    var name: String
+
+    init(name: String) {
+        self.name = name
+    }
+}
+
+class StudioAlbum: Album {
+    var studio: String
+
+    init(name: String, studio: String) {
+        self.studio = studio
+        super.init(name: name)
+    }
+}
+
+class LiveAlbum: Album {
+    var location: String
+
+    init(name: String, location: String) {
+        self.location = location
+        super.init(name: name)
+    }
+}
+
+/// That defines three classes: albums, studio albums and live albums, with the latter two both inheriting from Album. Because any instance of LiveAlbum is inherited from Album it can be treated just as either Album or LiveAlbum – it's both at the same time. This is called "polymorphism," but it means you can write code like this:
+var taylorSwift = StudioAlbum(name: "Taylor Swift", studio: "The Castles Studios")
+var fearless = StudioAlbum(name: "Speak Now", studio: "Aimeeland Studio")
+var iTunesLive = LiveAlbum(name: "iTunes Live from SoHo", location: "New York")
+
+var allAlbums: [Album] = [taylorSwift, fearless, iTunesLive]
+
+/// There we create an array that holds only albums, but put inside it two studio albums and a live album. This is perfectly fine in Swift because they are all descended from the Album class, so they share the same basic behavior.
+
+/// We can push this a step further to really demonstrate how polymorphism works. Let's add a getPerformance() method to all three classes:
+
+class Albumm {
+    var name: String
+
+    init(name: String) {
+        self.name = name
+    }
+
+    func getPerformance() -> String {
+        return "The album \(name) sold lots"
+    }
+}
+
+class StudioAlbumm: Albumm {
+    var studio: String
+
+    init(name: String, studio: String) {
+        self.studio = studio
+        super.init(name: name)
+    }
+
+    override func getPerformance() -> String {
+        return "The studio album \(name) sold lots"
+    }
+}
+
+class LiveAlbumm: Albumm {
+    var location: String
+
+    init(name: String, location: String) {
+        self.location = location
+        super.init(name: name)
+    }
+
+    override func getPerformance() -> String {
+        return "The live album \(name) sold lots"
+    }
+}
+
+/// The getPerformance() method exists in the Album class, but both child classes override it. When we create an array that holds Albums, we're actually filling it with subclasses of albums: LiveAlbum and StudioAlbum. They go into the array just fine because they inherit from the Album class, but they never lose their original class. So, we could write code like this:
+var taylorSwiftt = StudioAlbumm(name: "Taylor Swift", studio: "The Castles Studios")
+var fearlesss = StudioAlbumm(name: "Speak Now", studio: "Aimeeland Studio")
+var iTunesLivee = LiveAlbumm(name: "iTunes Live from SoHo", location: "New York")
+
+var allAlbumss: [Albumm] = [taylorSwiftt, fearlesss, iTunesLivee]
+
+for album in allAlbumss {
+    print(album.getPerformance())
+}
+
+/// That will automatically use the override version of getPerformance() depending on the subclass in question. That's polymorphism in action: an object can work as its class and its parent classes, all at the same time.
