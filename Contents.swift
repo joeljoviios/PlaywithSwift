@@ -1076,7 +1076,7 @@ snoop.describe()
 dre.describe()
 /// As you can see, when you use a property inside a method it will automatically use the value that belongs to the same object.
 
-// PROPERTY OBSERVERS
+// MARK:- PROPERTY OBSERVERS
 /// Swift lets you add code to be run when a property is about to be changed or has been changed. This is frequently a good way to have a user interface update when a value changes, for example.
 
 /// There are two kinds of property observer: willSet and didSet, and they are called before or after a property is changed. In willSet Swift provides your code with a special value called newValue that contains what the new property value is going to be, and in didSet you are given oldValue to represent the previous value.
@@ -1123,3 +1123,21 @@ print(fan.ageInDogYears)
 //var ageInDogYears: Int {
 //    return age * 7
 //}
+
+// MARK:- STATIC PROPERTIES AND METHODS
+/// Swift lets you create properties and methods that belong to a type, rather than to instances of a type. This is helpful for organizing your data meaningfully by storing shared data.
+
+/// Swift calls these shared properties “static properties”, and you create one just by using the static keyword. Once that's done, you access the property by using the full name of the type. Here's a simple example:
+struct TaylorFan {
+    static var favoriteSong = "Look What You Made Me Do"
+
+    var name: String
+    var age: Int
+}
+
+let fans = TaylorFan(name: "James", age: 25)
+print(TaylorFan.favoriteSong)
+
+/// So, a Taylor Swift fan has a name and age that belongs to them, but they all have the same favorite song.
+
+/// Because static methods belong to the struct itself rather than to instances of that struct, you can't use it to access any non-static properties from the struct.
