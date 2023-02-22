@@ -1056,3 +1056,70 @@ class HeavyMetalSinger: Singer {
 /// If you want to have one shared state that gets passed around and modified in place, you're looking for classes. You can pass them into functions or store them in arrays, modify them in there, and have that change reflected in the rest of your program.
 /// If you want to avoid shared state where one copy can't affect all the others, you're looking for structs. You can pass them into functions or store them in arrays, modify them in there, and they won't change wherever else they are referenced.
 /// If I were to summarize this key difference between structs and classes, I'd say this: classes offer more flexibility, whereas structs offer more safety. In practice, which you choose depends on the Apple framework you’re working with: UIKit, AppKit, SpriteKit and the other older frameworks rely heavily on structs for data and classes for user interface elements, whereas SwiftUI flips things around and uses structs for user interface elements and classes for data.
+
+// MARK:- PROPERTIES
+/// Structs and classes (collectively: "types") can have their own variables and constants, and these are called properties. These let you attach values to your types to represent them uniquely, but because types can also have methods you can have them behave according to their own data.
+
+/// Let's take a look at an example now:
+struct Candidate {
+    var clothes: String
+    var shoes: String
+
+    func describe() {
+        print("I like wearing \(clothes) with \(shoes)")
+    }
+}
+
+let snoop = Candidate(clothes: "T-shirts", shoes: "sneakers")
+let dre = Candidate(clothes: "short skirts", shoes: "high heels")
+snoop.describe()
+dre.describe()
+/// As you can see, when you use a property inside a method it will automatically use the value that belongs to the same object.
+
+// PROPERTY OBSERVERS
+/// Swift lets you add code to be run when a property is about to be changed or has been changed. This is frequently a good way to have a user interface update when a value changes, for example.
+
+/// There are two kinds of property observer: willSet and didSet, and they are called before or after a property is changed. In willSet Swift provides your code with a special value called newValue that contains what the new property value is going to be, and in didSet you are given oldValue to represent the previous value.
+
+/// Let's attach two property observers to the clothes property of a Person struct:
+
+struct Persona {
+    var clothes: String {
+        willSet {
+            updateUI(msg: "I'm changing from \(clothes) to \(newValue)")
+        }
+
+        didSet {
+            updateUI(msg: "I just changed from \(oldValue) to \(clothes)")
+        }
+    }
+}
+
+func updateUI(msg: String) {
+    print(msg)
+}
+
+var dua = Persona(clothes: "T-shirts")
+dua.clothes = "short skirts"
+
+// COMPUTED PROPERTIES
+/// It's possible to make properties that are actually code behind the scenes. We already used the uppercased() method of strings, for example, but there’s also a property called capitalized that gets calculated as needed, rather than every string always storing a capitalized version of itself.
+
+/// To make a computed property, place an open brace after your property then use either get or set to make an action happen at the appropriate time. For example, if we wanted to add a ageInDogYears property that automatically returned a person's age multiplied by seven, we'd do this:
+struct Personn {
+    var age: Int
+
+    var ageInDogYears: Int {
+        get {
+            return age * 7
+        }
+    }
+}
+
+var fan = Personn(age: 25)
+print(fan.ageInDogYears)
+
+/// Note: If you intend to use them only for reading data you can just remove the get part entirely, like this:
+//var ageInDogYears: Int {
+//    return age * 7
+//}
